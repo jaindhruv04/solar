@@ -10,7 +10,7 @@
 </head>
 
 <body class="min-h-screen flex flex-col font-sans" style="background-color: #F5F7F8;">
-  <nav class="flex w-full items-center justify-between gap-3 border-b border-slate-700 px-4 py-4 sm:px-8 sm:py-5" style="background-color: #081020;">
+  <nav class="relative z-50 flex w-full items-center justify-between gap-3 border-b border-slate-700 px-4 py-4 sm:px-8 sm:py-5" style="background-color: #081020;">
     <a href="/shop" class="text-2xl font-bold tracking-tight text-[#ffd266] sm:text-3xl ">SOLAR</a>
     <% var loggedin = typeof loggedin != "undefined" ? loggedin : true %>
     <% if(loggedin){ %>
@@ -22,7 +22,7 @@
       <% if(user && user.email === "dhruvjain0412@gmail.com"){ %>
       <div class="relative">
         <button onclick="toggleDropdown()" class="flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-slate-900 transition-opacity hover:opacity-80"><%= user.fullname.charAt(0).toUpperCase() %></button>
-        <div id="avatar-dropdown" class="absolute right-0 top-10 hidden w-48 rounded-xl bg-white shadow-lg py-2">
+        <div id="avatar-dropdown" class="absolute right-0 top-10 z-50 hidden w-48 rounded-xl bg-white py-2 shadow-lg">
           <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 sm:hidden" href="/shop">Shop</a>
           <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 sm:hidden" href="/cart">Cart</a>
           <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="/owners/admin">Admin</a>
@@ -33,7 +33,7 @@
       <% } else if(user){ %>
       <div class="relative">
         <button onclick="toggleDropdown()" class="flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-slate-900 transition-opacity hover:opacity-80"><%= user.fullname.charAt(0).toUpperCase() %></button>
-        <div id="avatar-dropdown" class="absolute right-0 top-10 hidden w-48 rounded-xl bg-white shadow-lg py-2">
+        <div id="avatar-dropdown" class="absolute right-0 top-10 z-50 hidden w-48 rounded-xl bg-white py-2 shadow-lg">
           <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 sm:hidden" href="/shop">Shop</a>
           <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 sm:hidden" href="/cart">Cart</a>
           <a class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="/profile">Profile</a>

@@ -1,115 +1,150 @@
 <%- include('./partials/header') %>
 
 <% if(success.length>0){ %>
-<div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-  <span class="inline-block mt-1 mb-1 text-white">
-    <%= success %>
-  </span>
+<div class="fixed left-1/2 top-20 z-50 -translate-x-1/2 rounded-xl border border-emerald-400/30 bg-emerald-500 px-5 py-3 text-sm font-semibold text-white shadow-2xl shadow-emerald-900/20">
+  <%= success %>
 </div>
 <% } %>
 
 <% if(error.length>0){ %>
-<div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
-  <span class="inline-block mt-1 mb-1 text-white">
-    <%= error %>
-  </span>
+<div class="fixed left-1/2 top-20 z-50 -translate-x-1/2 rounded-xl border border-red-400/30 bg-red-500 px-5 py-3 text-sm font-semibold text-white shadow-2xl shadow-red-900/20">
+  <%= error %>
 </div>
 <% } %>
 
+<div class="flex flex-1 flex-col bg-[#F4F7FA]">
+  <section class="relative overflow-hidden border-b border-slate-800 bg-[#07131F] text-white">
+    <div class="absolute -right-24 -top-32 h-80 w-80 rounded-full bg-[#205070]/30 blur-3xl"></div>
+    <div class="absolute -left-24 bottom-[-12rem] h-80 w-80 rounded-full bg-[#ffd266]/10 blur-3xl"></div>
 
-<div class="flex flex-1 flex-col overflow-y-auto" style="background-color: #F4F7FA;">
-  <div class="flex w-full flex-wrap items-start gap-4 border-b border-slate-800 px-5 py-5 text-white lg:px-10" style="background: radial-gradient(circle at 88% 13%, #205070 0, #08182C 36%, #07131F 77%);">
+    <div class="relative mx-auto w-full max-w-7xl px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
+      <div class="mb-7 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#ffd266]">Solar Store</p>
+          <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Find something you’ll love.</h1>
+          <p class="mt-2 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">Browse the latest products, discover deals, and add your favourites to your cart.</p>
+        </div>
+        <div class="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 md:block">
+          <%= products.length %> products
+        </div>
+      </div>
 
-    <div class="w-full">
-      <input oninput="searchProducts(this.value)" type="text" placeholder="Search products..." class="w-full rounded-xl border border-slate-700 bg-slate-900/50 px-4 py-3 text-sm text-slate-100 placeholder-slate-400 outline-none focus:border-slate-500">
+      <div class="relative">
+        <i class="ri-search-line pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i>
+        <input oninput="searchProducts(this.value)" type="text" placeholder="Search products..." class="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-11 pr-4 text-sm text-white shadow-lg outline-none backdrop-blur-sm transition placeholder:text-slate-500 focus:border-[#ffd266]/60 focus:bg-white/10 focus:ring-2 focus:ring-[#ffd266]/10">
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm">
+          <button onclick="toggleSection('sort-options', this)" class="flex w-full items-center justify-between text-left text-xs font-bold uppercase tracking-wider text-slate-200">
+            <span class="flex items-center gap-2"><i class="ri-sort-desc"></i> Sort By</span>
+            <i class="ri-arrow-down-s-line text-lg transition-transform duration-200"></i>
+          </button>
+          <div id="sort-options" class="mt-3 hidden flex-col gap-2 border-t border-white/10 pt-3">
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">Popular</a>
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">Newest</a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm">
+          <button onclick="toggleSection('collection-options', this)" class="flex w-full items-center justify-between text-left text-xs font-bold uppercase tracking-wider text-slate-200">
+            <span class="flex items-center gap-2"><i class="ri-layout-grid-line"></i> Collections</span>
+            <i class="ri-arrow-down-s-line text-lg transition-transform duration-200"></i>
+          </button>
+          <div id="collection-options" class="mt-3 hidden flex-col gap-2 border-t border-white/10 pt-3">
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">New Collection</a>
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">All Products</a>
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">Discounted Products</a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm">
+          <button onclick="toggleSection('filter-options', this)" class="flex w-full items-center justify-between text-left text-xs font-bold uppercase tracking-wider text-slate-200">
+            <span class="flex items-center gap-2"><i class="ri-equalizer-2-line"></i> Filter By</span>
+            <i class="ri-arrow-down-s-line text-lg transition-transform duration-200"></i>
+          </button>
+          <div id="filter-options" class="mt-3 hidden flex-col gap-2 border-t border-white/10 pt-3">
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">Availability</a>
+            <a class="text-sm text-slate-400 transition-colors hover:text-[#ffd266]" href="">Discount</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="w-full rounded-xl border border-slate-800 bg-slate-900/50 p-4 md:w-[calc(33.333%-0.75rem)]">
-      <button onclick="toggleSection('sort-options', this)"
-        class="flex w-full items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-100">
-        Sort By
-        <i class="ri-arrow-down-s-line text-lg transition-transform duration-200"></i>
-      </button>
-      <div id="sort-options" class="hidden flex-col mt-3">
-        <a class="mb-2 block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">Popular</a>
-        <a class="block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">Newest</a>
+  <main class="mx-auto w-full max-w-7xl flex-1 px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">All products</h2>
+        <p class="mt-1 text-sm text-slate-500">Explore the Solar collection.</p>
       </div>
     </div>
 
-    <hr class="hidden">
-
-  
-    <div class="w-full rounded-xl border border-slate-800 bg-slate-900/50 p-4 md:w-[calc(33.333%-0.75rem)]">
-      <button onclick="toggleSection('collection-options', this)"
-        class="flex w-full items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-100">
-        Collections
-        <i class="ri-arrow-down-s-line text-lg transition-transform duration-200"></i>
-      </button>
-      <div id="collection-options" class="hidden flex-col mt-3">
-        <a class="mb-2 block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">New Collection</a>
-        <a class="mb-2 block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">All Products</a>
-        <a class="block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">Discounted Products</a>
-      </div>
-    </div>
-
-    <hr class="hidden">
-
-    <div class="w-full rounded-xl border border-slate-800 bg-slate-900/50 p-4 md:w-[calc(33.333%-0.75rem)]">
-      <button onclick="toggleSection('filter-options', this)"
-        class="flex w-full items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-100">
-        Filter By
-        <i class="ri-arrow-down-s-line text-lg transition-transform duration-200"></i>
-      </button>
-      <div id="filter-options" class="hidden flex-col mt-3">
-        <a class="mb-2 block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">Availability</a>
-        <a class="block w-fit text-sm text-slate-300 transition-colors hover:text-[#ffd266]" href="">Discount</a>
-      </div>
-    </div>
-
-  </div>
-  <div class="w-full px-5 py-10 lg:px-10 lg:py-12" >
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="products-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <% products.forEach(function(product){ %>
-<div class="group product-card w-full overflow-hidden rounded-2xl bg-white shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl" data-name="<%= product.name %>">
-  <div class="flex h-56 w-full items-center justify-center bg-[<%= product.bgcolor %>] sm:h-64">
-    <% if(product.image){ %>
-    <img class="h-40 w-40 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-48 sm:w-48" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
-    <% } %>
-  </div>
-  <div class="flex justify-between bg-[<%= product.panelcolor %>] items-center px-4 py-3 min-h-[78px] text-[<%= product.textcolor %>]">
-    <div class="min-w-0">
-      <h3 class="truncate text-sm font-bold">
-        <%= product.name %>
-      </h3>
-      <h4 class="mt-1 text-xs font-medium opacity-80">
-        <% if(product.discount > 0){ %>
-        <span class="line-through opacity-60">₹ <%= product.price %></span>
-        <span class="ml-1">₹ <%= Math.round(product.price * (1 - product.discount / 100)) %></span>
-        <% } else { %>
-        ₹ <%= product.price %>
-        <% } %>
-      </h4>
+      <article class="group product-card flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl" data-name="<%= product.name %>">
+        <div class="relative flex h-60 w-full items-center justify-center overflow-hidden bg-[<%= product.bgcolor %>] sm:h-64">
+          <% if(product.discount > 0){ %>
+          <span class="absolute left-3 top-3 z-10 rounded-full bg-[#07131F] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#ffd266] shadow-lg">
+            <%= product.discount %>% off
+          </span>
+          <% } %>
+
+          <% if(product.image){ %>
+          <img class="h-44 w-44 object-contain transition duration-500 ease-out group-hover:scale-110 sm:h-48 sm:w-48" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="<%= product.name %>" loading="lazy">
+          <% } else { %>
+          <i class="ri-image-line text-5xl text-black/20"></i>
+          <% } %>
+        </div>
+
+        <div class="flex flex-1 items-center justify-between gap-4 bg-[<%= product.panelcolor %>] px-4 py-4 text-[<%= product.textcolor %>]">
+          <div class="min-w-0">
+            <h3 class="truncate text-sm font-bold" title="<%= product.name %>"><%= product.name %></h3>
+            <div class="mt-1 flex items-center gap-2 text-sm">
+              <% if(product.discount > 0){ %>
+              <span class="text-xs opacity-50 line-through">₹<%= product.price %></span>
+              <span class="font-bold">₹<%= Math.round(product.price * (1 - product.discount / 100)) %></span>
+              <% } else { %>
+              <span class="font-bold">₹<%= product.price %></span>
+              <% } %>
+            </div>
+          </div>
+
+          <a aria-label="Add <%= product.name %> to cart" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-lg text-slate-900 shadow-sm transition-all duration-200 hover:scale-110 hover:bg-[#ffd266] hover:shadow-md active:scale-95" href="/addtocart/<%=product._id%>">
+            <i class="ri-add-line"></i>
+          </a>
+        </div>
+      </article>
+      <% }) %>
     </div>
-    <a class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-lg text-slate-900 transition-transform hover:scale-110" href="/addtocart/<%=product._id%>">
-      <i class="ri-add-line"></i>
-    </a>
-  </div>
+
+    <div id="no-results" class="hidden rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
+      <i class="ri-search-eye-line text-4xl text-slate-300"></i>
+      <h3 class="mt-4 text-lg font-bold text-slate-800">No products found</h3>
+      <p class="mt-1 text-sm text-slate-500">Try searching for something else.</p>
+    </div>
+  </main>
 </div>
-<% }) %>
-</div>
-</div>
-</div>
+
 <script>
   function searchProducts(val) {
     let cards = document.querySelectorAll('.product-card');
+    let query = val.toLowerCase().trim();
+    let visible = 0;
+
     cards.forEach(function(card) {
       let name = card.getAttribute('data-name').toLowerCase();
-      card.style.display = name.includes(val.toLowerCase()) ? '' : 'none';
+      let matches = name.includes(query);
+      card.style.display = matches ? '' : 'none';
+      if(matches) visible++;
     });
+
+    document.getElementById('no-results').classList.toggle('hidden', visible !== 0);
   }
+
   function toggleSection(id, btn) {
     const el = document.getElementById(id);
-    const icon = btn.querySelector('i');
+    const icon = btn.querySelector('i:last-child');
     el.classList.toggle('hidden');
     icon.classList.toggle('rotate-180');
   }
