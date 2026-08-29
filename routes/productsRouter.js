@@ -10,6 +10,11 @@ router.post("/create", isLoggedIn, isAdmin, upload.single("image"), async (req, 
   try {
     let { name, price, discount, bgcolor, panelcolor, textcolor } = req.body;
 
+    if (!req.file) {
+      req.flash("error", "Product image is required");
+      return res.redirect("/owners/admin/create");
+    }
+
     let product = await productModel.create({
       name,
       price,

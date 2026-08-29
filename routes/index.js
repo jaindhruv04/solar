@@ -51,7 +51,9 @@ router.get("/addtocart/:productid", isLoggedIn, async (req, res) => {
 
 router.get("/removefromcart/:productid", isLoggedIn, async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });
-  let index = user.cart.indexOf(req.params.productid);
+  let index = user.cart.findIndex(
+    (id) => id.toString() === req.params.productid
+  );
   if (index > -1) user.cart.splice(index, 1);
   await user.save();
   res.redirect("/cart");

@@ -73,7 +73,14 @@ module.exports.logoutUser = async (req, res) => {
 module.exports.editUser = async(req,res)=>{
   try {
     let { fullname, contact } = req.body;
-    await userModel.findOneAndUpdate({ email: req.user.email }, { fullname, contact });
+    let updateData = { fullname, contact };
+
+    if (req.file) {
+      let base64 = req.file.buffer.toString("base64");
+      updateData.picture = `data:${req.file.mimetype};base64,${base64}`;
+    }
+
+    await userModel.findOneAndUpdate({ email: req.user.email }, updateData);
     res.redirect("/profile");
   } catch(err) {
     res.send(err.message);
