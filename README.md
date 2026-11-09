@@ -1,118 +1,112 @@
-# ☀️ Solar
+# Solar
 
-A full-stack e-commerce web application built with **Node.js, Express, MongoDB, EJS, and Tailwind CSS**.
+A server-rendered e-commerce application built with **Node.js, Express, MongoDB, Mongoose, EJS, and Tailwind CSS**.
 
-Solar is a backend-focused project built to explore how a complete server-rendered web application works, including authentication, product management, database integration, sessions, cookies, and server-side rendering.
+Solar demonstrates core full-stack web development workflows: user authentication, protected pages, product catalog management, image uploads, admin operations, and shopping-cart calculations.
 
-## 🌐 Live Demo
+**Live application:** [https://solar-9r6t.onrender.com/](https://solar-9r6t.onrender.com/)
 
-**[Visit Solar](https://solar-9r6t.onrender.com/)**
+> Hosted on Render. The first request may take longer after a period of inactivity.
 
-> **Note:** Solar is hosted on Render. If the server has been idle, the first request may take a little longer to respond.
+## Features
 
-## 🚀 Features
+### Customer experience
+- User registration and login with bcrypt password hashing.
+- JWT-based authentication stored in an HTTP-only cookie.
+- Protected shop, profile, and cart pages.
+- Product catalogue with images, pricing, and discount display.
+- Add products to and remove products from a shopping cart.
+- Cart total calculation using product discounts and a fixed ₹20 platform fee.
+- Profile editing, including profile picture upload and contact details.
+- Flash messages for user feedback.
 
-* 🔐 **User registration and login**
-* 🔑 **JWT-based authentication**
-* 🍪 **HTTP-only authentication cookies**
-* 🔒 **Password hashing with bcrypt**
-* 👤 **User and owner/admin routes**
-* 🛒 **Working shopping cart** (add/remove items, calculate bills)
-* 🛍️ **Complete product management**
-* 👨‍💼 **Owner/Admin panel** with product CRUD operations
-* 🖼️ **Image upload** for products (Buffer storage)
-* 🎨 **Customizable product colors** (background, panel, text)
-* 💰 **Discount system** for products
-* 🗄️ **MongoDB database integration with Mongoose**
-* 💬 **Flash messages** for user feedback
-* 📄 **Server-side rendering with EJS**
-* 🎨 **Tailwind CSS** for responsive styling
-* 🌐 **Express routing and middleware**
-* ⚙️ **Environment variable configuration**
-* 📱 **Responsive design** across devices
+### Admin experience
+- Admin-protected dashboard for viewing products.
+- Create, edit, and delete product listings.
+- Product image uploads using Multer memory storage.
+- Configure product price, discount, background color, panel color, and text color.
+- Authentication and admin middleware for product-management operations.
 
-## 🛠️ Tech Stack
+### Application structure
+- MVC-style separation across routes, controllers, models, middleware, and EJS views.
+- MongoDB persistence with Mongoose models.
+- Server-side rendering with reusable EJS partials.
+- Environment-based configuration and Render deployment.
 
-### Frontend
+## Tech stack
 
-* EJS
-* HTML
-* CSS
-* JavaScript
-* Tailwind CSS
+| Layer | Technologies |
+|---|---|
+| Runtime | Node.js |
+| Server | Express 5 |
+| Database | MongoDB |
+| ODM | Mongoose |
+| Views | EJS |
+| Styling | Tailwind CSS, HTML, CSS, JavaScript |
+| Authentication | JSON Web Tokens, bcrypt |
+| Middleware and utilities | Express Session, cookie-parser, connect-flash, Multer, dotenv |
+| Deployment | Render |
 
-### Backend
+## Application flow
 
-* Node.js
-* Express.js
+1. A visitor registers or logs in through the application.
+2. Passwords are hashed with bcrypt before being stored.
+3. After successful authentication, the server issues a signed JWT in an HTTP-only cookie.
+4. Authentication middleware verifies the token and loads the corresponding user for protected routes.
+5. Customers browse products and manage their cart. Cart entries are stored as product references in the user's MongoDB document.
+6. Admin middleware protects product-management pages and operations.
 
-### Database
-
-* MongoDB
-* Mongoose
-
-### Authentication & Security
-
-* JWT
-* bcrypt
-* Express Session
-* Cookie Parser
-* Connect Flash
-
-### Deployment
-
-* Render
-
-## 📁 Project Structure
+## Project structure
 
 ```text
 solar/
 ├── config/
-│   ├── development.json          # Development environment config
-│   ├── production.json           # Production environment config
-│   ├── keys.js                   # Configuration keys
-│   ├── mongoose-connections.js   # MongoDB connection setup
-│   └── multer-config.js          # File upload configuration
+│   ├── development.json
+│   ├── production.json
+│   ├── keys.js
+│   ├── mongoose-connections.js
+│   └── multer-config.js
 ├── controllers/
-│   └── authController.js         # Authentication logic
+│   └── authController.js
 ├── middlewares/
-│   ├── isAdmin.js               # Admin authorization middleware
-│   └── isLoggedIn.js            # User authentication middleware
+│   ├── isAdmin.js
+│   └── isLoggedIn.js
 ├── models/
-│   ├── owner-models.js          # Owner/Admin data model
-│   ├── product-model.js         # Product data model
-│   └── user-model.js            # User data model
+│   ├── owner-models.js
+│   ├── product-model.js
+│   └── user-model.js
 ├── routes/
-│   ├── index.js                 # Main application routes
-│   ├── ownersRouter.js          # Owner/Admin routes
-│   ├── productsRouter.js        # Product management routes
-│   └── usersRouter.js           # User authentication routes
+│   ├── index.js
+│   ├── ownersRouter.js
+│   ├── productsRouter.js
+│   └── usersRouter.js
 ├── utils/
-│   └── generateToken.js         # JWT token generation utility
+│   └── generateToken.js
 ├── views/
 │   ├── partials/
-│   │   ├── header.ejs           # Reusable header component
-│   │   └── footer.ejs           # Reusable footer component
-│   ├── admin.ejs                # Admin dashboard
-│   ├── cart.ejs                 # Shopping cart page
-│   ├── createproducts.ejs       # Product creation form
-│   ├── editproduct.ejs          # Product editing form
-│   ├── index.ejs                # Homepage
-│   ├── owner-login.ejs          # Owner login page
-│   ├── profile.ejs              # User profile page
-│   └── shop.ejs                 # Products showcase page
+│   ├── admin.ejs
+│   ├── cart.ejs
+│   ├── createproducts.ejs
+│   ├── editproduct.ejs
+│   ├── index.ejs
+│   ├── owner-login.ejs
+│   ├── profile.ejs
+│   └── shop.ejs
 ├── public/
-│   ├── images/                  # Static images
-│   ├── javascripts/             # Client-side JavaScript
-│   └── stylesheets/             # CSS files
+│   ├── images/
+│   ├── javascripts/
+│   └── stylesheets/
 ├── postman/
-│   └── collections/             # API testing collections
-├── app.js                       # Main application entry point
-├── package.json                 # Project dependencies
-└── .env                         # Environment variables
+│   └── collections/
+├── app.js
+└── package.json
 ```
 
-## ⚙️ Installation
+## Getting started
+
+### Prerequisites
+- Node.js and npm
+- A MongoDB database (local or hosted)
 
 ### 1. Clone the repository
 
@@ -129,143 +123,66 @@ npm install
 
 ### 3. Configure environment variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root:
 
 ```env
-# Database
 MONGODB_URI=your_mongodb_connection_string
-
-# Authentication
-EXPRESS_SESSION_SECRET=your_session_secret
 JWT_KEY=your_jwt_secret
-
-# Server
-PORT=3000
+EXPRESS_SESSION_SECRET=your_session_secret
 NODE_ENV=development
+PORT=3000
 ```
 
-### 4. Start the application
+Use your own secret values. Do not commit the `.env` file or expose production credentials.
+
+### 4. Run the application
 
 ```bash
 node app.js
 ```
 
-The application will run at:
+Open [http://localhost:3000](http://localhost:3000).
 
-```text
-http://localhost:3000
-```
+## Routes
 
-## 🔌 API Endpoints
+The following routes are defined in the application. Admin pages and product operations require an authenticated admin account.
 
-### User Authentication
-- `GET /` - Homepage
-- `POST /users/register` - Register a new user
-- `POST /users/login` - User login  
-- `GET /users/logout` - User logout
-- `GET /profile` - User profile page (requires login)
+| Method | Route | Purpose | Access |
+|---|---|---|---|
+| GET | `/` | Render the homepage | Public |
+| GET | `/shop` | Browse products | Authenticated |
+| GET | `/profile` | View profile | Authenticated |
+| GET | `/cart` | View cart and calculated total | Authenticated |
+| GET | `/addtocart/:productid` | Add a product to the cart | Authenticated |
+| GET | `/removefromcart/:productid` | Remove a product from the cart | Authenticated |
+| POST | `/users/register` | Register a customer | Public |
+| POST | `/users/login` | Log in a customer | Public |
+| GET | `/users/logout` | Log out a customer | Public |
+| POST | `/users/profile` | Update profile details and picture | Authenticated |
+| GET | `/owners/admin` | View admin product dashboard | Admin |
+| GET | `/owners/admin/create` | Open product creation form | Admin |
+| POST | `/products/create` | Create a product with an image | Admin |
+| GET | `/owners/admin/edit/:productid` | Open product edit form | Admin |
+| POST | `/owners/admin/edit/:productid` | Update a product | Admin |
+| GET | `/owners/admin/delete/:productid` | Delete a product | Admin |
 
-### Shopping & Products
-- `GET /shop` - Browse all products (requires login)
-- `GET /addtocart/:productid` - Add product to cart (requires login)
-- `GET /removefromcart/:productid` - Remove product from cart (requires login)
-- `GET /cart` - View shopping cart with bill calculation (requires login)
+## Implementation notes
 
-### Owner/Admin Management
-- `GET /owners/create` - Owner registration page
-- `POST /owners/create` - Create owner account
-- `GET /owners/login` - Owner login page
-- `POST /owners/login` - Owner login
-- `GET /admin` - Admin dashboard (requires admin login)
-- `GET /owners/logout` - Owner logout
+- Product images are received through Multer memory storage and stored as binary buffers in MongoDB.
+- Cart items are stored as MongoDB ObjectId references to product documents and populated when the cart page is rendered.
+- The cart calculation applies each product's discount and adds a fixed ₹20 platform fee.
+- The JWT contains the user's email and ID and is configured to expire after one day.
+- The current admin middleware authorizes a specific email address. This is a project-level authorization approach, not a general multi-role permissions system.
 
-### Product Management (Admin Only)
-- `GET /products/create` - Product creation page
-- `POST /products/create` - Create new product with image upload
-- `GET /products/edit/:id` - Edit product page
-- `POST /products/edit/:id` - Update existing product
-- `GET /products/delete/:id` - Delete product
+## Current scope and limitations
 
-## 🔐 Authentication Flow
+Solar currently demonstrates product browsing, customer account flows, cart management, and admin product CRUD. It does **not** currently implement order placement, payment processing, or order tracking. The cart's checkout button is a UI element and is not connected to a checkout flow. The repository does not currently include an automated test suite.
 
-Solar uses **bcrypt and JWT** to handle user authentication.
+## Author
 
-1. A user registers with their credentials.
-2. The password is hashed using bcrypt before being stored.
-3. A JWT is generated after successful authentication.
-4. The token is stored in an HTTP-only cookie.
-5. Authenticated routes can use the token to identify the user.
-6. Logging out clears the authentication cookie.
-
-## 📖 Usage
-
-### For Regular Users
-1. **Register/Login**: Create an account or login at the homepage
-2. **Browse Products**: Visit `/shop` to see all available products
-3. **Shopping Cart**: Add products to cart and view total with automatic bill calculation
-4. **Profile Management**: Access your profile to view account details
-
-### For Owners/Admins  
-1. **Create Owner Account**: Register as an owner at `/owners/create`
-2. **Admin Access**: Login to access the admin dashboard at `/admin`
-3. **Product Management**: Create, edit, and delete products with image uploads
-4. **Inventory Control**: Manage product colors, pricing, and discounts
-
-### Key Features in Action
-- **Smart Cart**: Automatic bill calculation with discounts and shipping (₹20)
-- **Image Upload**: Products support image uploads stored as Buffer data
-- **Color Customization**: Set background, panel, and text colors for products
-- **Flash Messages**: Real-time feedback for all user actions
-- **Responsive Design**: Works seamlessly across all devices
-
-## 🧠 What I Learned
-
-This project focuses on understanding the fundamentals of building a **server-rendered full-stack e-commerce application**.
-
-Key concepts explored:
-
-* **Express Architecture**: MVC-style separation with controllers, models, and views
-* **Authentication & Security**: JWT tokens, bcrypt hashing, HTTP-only cookies
-* **Database Integration**: MongoDB with Mongoose ODM, schema design, and relationships
-* **File Upload Handling**: Multer configuration for product image uploads
-* **Shopping Cart Logic**: Add/remove functionality with bill calculations
-* **Admin Panel Development**: Role-based access control and product management
-* **Server-Side Rendering**: Dynamic EJS templates with partials
-* **Middleware Implementation**: Custom authentication and authorization middleware  
-* **Flash Messaging**: User feedback system with connect-flash
-* **Environment Configuration**: Multi-environment setup with config files
-* **API Design**: RESTful routing patterns and HTTP methods
-* **Session Management**: Express sessions with secure configuration
-* **Production Deployment**: Render hosting with environment variables
-
-## 🎯 Future Targets
-
-* [ ] 📦 **Order Management System** - Complete order creation and tracking
-* [ ] 💳 **Payment Integration** - Stripe/PayPal integration for secure payments
-* [ ] 📧 **Email Notifications** - Order confirmations and user communications  
-* [ ] 🔍 **Advanced Search & Filtering** - Category-based product filtering
-* [ ] ⭐ **Product Reviews & Ratings** - User feedback system for products
-* [ ] 📊 **Analytics Dashboard** - Sales tracking and inventory management
-* [ ] 🚚 **Shipping Integration** - Real-time shipping cost calculation
-* [ ] 📱 **Mobile App** - React Native companion app
-* [ ] 🛡️ **Enhanced Security** - Rate limiting, input validation, CSRF protection
-* [ ] 🧪 **Testing Suite** - Unit and integration tests with Jest
-* [ ] 📈 **Performance Optimization** - Database indexing and caching
-* [ ] 🌍 **Internationalization** - Multi-language support
-* [ ] 🔄 **Real-time Updates** - WebSocket integration for live notifications
-
-## 📌 Project Status
-
-🚧 **In active development**
-
-Solar is being developed as an **EJS-based full-stack application**. The project will continue to evolve with additional e-commerce functionality, security improvements, and backend features.
-
-## 👨‍💻 Author
-
-**Dhruv Jain**
-
-* GitHub: [@jaindhruv04](https://github.com/jaindhruv04)
+**Dhruv Jain**  
+[GitHub: @jaindhruv04](https://github.com/jaindhruv04)
 
 ---
 
-Built with **Node.js, Express, MongoDB, EJS, and Tailwind CSS**.
+Built with Node.js, Express, MongoDB, and EJS.
